@@ -6,11 +6,12 @@ const appShellList = [
   "/src/css/main.css",
   "/src/js/material.min.js",
   "/src/js/main.js",
-  "/"
+  "/",
+  "/index.html"
 ];
 
-const CACHE_STATIC = "static-v3";
-const CACHE_DYNAMIC = "dynamic-v2";
+const CACHE_STATIC = "static-v4";
+const CACHE_DYNAMIC = "dynamic-v4";
 
 self.addEventListener("install", event => {
   console.log("[Service Worker]: install");
@@ -43,9 +44,9 @@ self.addEventListener("fetch", function(event) {
     caches.match(event.request).then(response => {
       return (
         response ||
-        fetch(event.request).then(() => {
-          caches.open(CACHE_DYNAMIC).then(cache => {
-            return cache.add(event.request);
+        fetch(event.request).then((res) => {
+          return caches.open(CACHE_DYNAMIC).then(cache => {
+            return cache.put(event.request.url, res.clone());
           });
         })
       );

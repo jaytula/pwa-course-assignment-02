@@ -1,19 +1,21 @@
+var box = document.querySelector(".box");
+var button = document.querySelector("button");
 
-var box = document.querySelector('.box');
-var button = document.querySelector('button');
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").then(() => {
+    console.log("Service worker registered.");
+  });
+}
 
-button.addEventListener('click', function(event) {
-  if (box.classList.contains('visible')) {
-    box.classList.remove('visible');
+button.addEventListener("click", function(event) {
+  if (box.classList.contains("visible")) {
+    box.classList.remove("visible");
   } else {
-    box.classList.add('visible');
+    box.classList.add("visible");
   }
 });
 
 // 1) Register a Service Worker
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
-}
 // 2) Identify the AppShell (i.e. core assets your app requires to provide its basic "frame")
 // 3) Precache the AppShell
 // 4) Add Code to fetch the precached assets from cache when needed
